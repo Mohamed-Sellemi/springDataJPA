@@ -2,19 +2,22 @@ package com.formation.spring.data.metier;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.formation.spring.data.exception.ModelNotExisteException;
 import com.formation.spring.data.model.Product;
 import com.formation.spring.data.repository.ProductRepository;
 
 @Service
 public final class ProductService {
     
+    @Autowired
     private ProductRepository repository;
     
-    public Product save(Product product) {
+    public Product save(Product product) throws ModelNotExisteException {
         if (product == null) {
-            throw new NullPointerException("Le Produit ne doit pas être null");
+            throw new ModelNotExisteException("Le Produit ne doit pas être null");
         }
         
         return repository.save(product);
@@ -29,10 +32,10 @@ public final class ProductService {
         return repository.findAll();
     }
     
-    public void delete(int productId) {
+    public void delete(int productId) throws ModelNotExisteException {
         Product product = this.find(productId);
         if (product == null) {
-            throw new NullPointerException("pas de produit correspondant à ce productId: " + productId);
+            throw new ModelNotExisteException("pas de produit correspondant à ce productId: " + productId);
         }
         
         repository.delete(product);
