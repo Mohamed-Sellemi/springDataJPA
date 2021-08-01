@@ -27,7 +27,7 @@ public final class Product {
     private String description;
     @Column(name = "cout")
     private int cost;
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "produit_id")
     private List<Comment> comments = new ArrayList<>();
     
