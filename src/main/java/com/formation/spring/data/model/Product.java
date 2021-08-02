@@ -10,29 +10,35 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.DynamicUpdate;
+
 @Entity
 @Table(name = "produit")
+@DynamicUpdate
 public final class Product {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "produit_id")
     private int productId;
+    
     @Column(name = "nom")
     private String name;
+    
     @Column(name = "description")
     private String description;
+    
     @Column(name = "cout")
     private int cost;
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    @JoinColumn(name = "produit_id")
+    
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Comment> comments = new ArrayList<>();
     
-    @ManyToMany(mappedBy = "products")
+    @ManyToMany(mappedBy = "products", cascade = CascadeType.ALL)
     private List<Category> categories = new ArrayList<>();
     
     public int getProductId() {
@@ -81,6 +87,16 @@ public final class Product {
     
     public void setCategories(List<Category> categories) {
         this.categories = categories;
+    }
+    
+    public void addComment(Comment comment) {
+        comments.add(comment);
+        comment.setProduct(this);
+    }
+    
+    public void removeComment(Comment comment) {
+        comments.remove(comment);
+        comment.setProduct(null);
     }
     
     @Override

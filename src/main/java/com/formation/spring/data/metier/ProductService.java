@@ -45,18 +45,12 @@ public final class ProductService {
         repository.delete(product);
     }
     
-    public void update(Product product) throws ModelNotExisteException {
+    public void update(Product product) {
         if (product == null) {
             throw new NullPointerException("Le product ne peut pas être null");
         }
-        Product prod = this.find(product.getProductId());
-        if (prod == null) {
-            throw new ModelNotExisteException("pas de produit correspondant à ce productId: " + product.getProductId());
-        }
-        prod.setCost(product.getCost());
-        prod.setDescription(product.getDescription());
-        prod.setName(product.getName());
-        repository.save(prod);
+        
+        repository.save(product);
     }
     
     public Page<Product> findAllWithPage(int page, int size) {

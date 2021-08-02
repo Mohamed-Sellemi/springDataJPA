@@ -18,10 +18,12 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "categorie")
 public final class Category {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "categorie_id")
     private int categoryId;
+    
     @Column(name = "nom")
     private String name;
     
@@ -51,6 +53,16 @@ public final class Category {
     
     public void setProducts(List<Product> products) {
         this.products = products;
+    }
+    
+    public void addProduct(Product product) {
+        products.add(product);
+        product.getCategories().add(this);
+    }
+    
+    public void removeProduct(Product product) {
+        products.remove(product);
+        product.getCategories().remove(this);
     }
     
     @Override
