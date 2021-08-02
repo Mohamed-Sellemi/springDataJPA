@@ -1,10 +1,18 @@
 package com.formation.spring.data.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -17,9 +25,9 @@ public final class Category {
     @Column(name = "nom")
     private String name;
     
-//    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.EAGER)
-//    @JoinTable(name = "categorie_produit", joinColumns = @JoinColumn(name = "categorie_id"), inverseJoinColumns = @JoinColumn(name = "produit_id"))
-//    private List<Product> products = new ArrayList<>();
+    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.EAGER)
+    @JoinTable(name = "categorie_produit", joinColumns = @JoinColumn(name = "categorie_id"), inverseJoinColumns = @JoinColumn(name = "produit_id"))
+    private List<Product> products = new ArrayList<>();
     
     public int getCategoryId() {
         return categoryId;
@@ -37,22 +45,17 @@ public final class Category {
         this.name = name;
     }
     
-    @Override
-    public String toString() {
-        return "Category [categoryId=" + categoryId + ", name=" + name + "]";
+    public List<Product> getProducts() {
+        return products;
     }
     
-//    public List<Product> getProducts() {
-//        return products;
-//    }
-//    
-//    public void setProducts(List<Product> products) {
-//        this.products = products;
-//    }
-//    
-//    @Override
-//    public String toString() {
-//        return "Category [categoryId=" + categoryId + ", name=" + name + ", products=" + products + "]";
-//    }
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
+    
+    @Override
+    public String toString() {
+        return "Category [categoryId=" + categoryId + ", name=" + name + ", products=" + products + "]";
+    }
     
 }

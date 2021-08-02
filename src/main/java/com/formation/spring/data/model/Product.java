@@ -11,7 +11,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -33,8 +32,7 @@ public final class Product {
     @JoinColumn(name = "produit_id")
     private List<Comment> comments = new ArrayList<>();
     
-    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.LAZY)
-    @JoinTable(name = "categorie_produit", joinColumns = @JoinColumn(name = "produit_id"), inverseJoinColumns = @JoinColumn(name = "categorie_id"))
+    @ManyToMany(mappedBy = "products")
     private List<Category> categories = new ArrayList<>();
     
     public int getProductId() {
@@ -88,7 +86,7 @@ public final class Product {
     @Override
     public String toString() {
         return "Product [productId=" + productId + ", name=" + name + ", description=" + description + ", cost=" + cost
-                + ", comments=" + comments + ", categories=" + categories + "]";
+                + ", comments=" + comments + "]";
     }
     
 }

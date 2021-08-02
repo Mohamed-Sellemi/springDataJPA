@@ -26,6 +26,7 @@ public class SpringDataJpaApplication implements CommandLineRunner {
     public void run(String... args) throws Exception {
         
         service.find(1).getCategories().forEach(System.out::println);
+        repo.findById(1).get().getProducts().forEach(System.out::println);
     }
     
 }
