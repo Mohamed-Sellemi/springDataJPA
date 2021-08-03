@@ -68,4 +68,11 @@ public final class ProductService {
         return repository.findAllByCost(cost, PageRequest.of(page, size));
     }
     
+    public List<Product> getAllProductWithNameCategory(String name) {
+        if (name == null) {
+            throw new NullPointerException("le name ne peut pas être null");
+        }
+        return repository.findByCategoriesName(name);
+    }
+    
 }

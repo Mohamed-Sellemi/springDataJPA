@@ -7,7 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.formation.spring.data.metier.ProductService;
-import com.formation.spring.data.model.Product;
 import com.formation.spring.data.repository.CategoryRepository;
 import com.formation.spring.data.repository.CommentRepository;
 
@@ -54,12 +53,12 @@ public class SpringDataJpaApplication implements CommandLineRunner {
 //        
 //        p2.addComment(co1);
 //        repoC.save(co1);
+    
+//        Product p1 = service.find(9);
+//        p1.setCost(800);
+//        service.save(p1);
         
-        Product p1 = service.find(9);
-        System.out.println(p1);
-        
-        p1.setCost(800);
-        service.save(p1);
+        service.getAllProductWithNameCategory("Standard").forEach(product -> System.out.println(product.getName()));
     }
     
 }
